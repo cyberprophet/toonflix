@@ -69,30 +69,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Pomodoros',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge
-                                  ?.color,
-                              fontWeight: FontWeight.w600,
-                            ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Pomodoro Timer',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color:
+                                Theme.of(context).textTheme.displayLarge?.color,
+                            fontWeight: FontWeight.w600,
                           ),
-                          Text(
-                            '$totalPomodoros',
-                            style: TextStyle(
-                                fontSize: 58,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge
-                                    ?.color),
+                        ),
+                        Text(
+                          '$totalPomodoros',
+                          style: TextStyle(
+                            fontSize: 58,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).textTheme.displayLarge?.color,
                           ),
-                        ]),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -104,11 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void onResetPressed() {
+    if (isRunning) {
+      timer.cancel();
+    }
     setState(() {
       isRunning = false;
       totalSeconds = twentyFiveMinutes;
     });
-    timer.cancel();
   }
 
   void onPausePressed() {
