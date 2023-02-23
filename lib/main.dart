@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/screens/home_screen.dart';
+import 'package:toonflix/screens/toonflix_screen.dart';
 
 void main() {
   runApp(const App());
@@ -17,14 +17,14 @@ class App extends StatelessWidget {
         ),
         scaffoldBackgroundColor: bgColor,
       ),
-      home: const Scaffold(
-        backgroundColor: Color(0xFFF4EDDB),
-        body: HomeScreen(),
+      home: Scaffold(
+        backgroundColor: const Color(0xFFF4EDDB),
+        body: ToonflixScreen(),
       ),
     );
   }
 
   const App({super.key});
 
-  final bgColor = const Color(0xFFE7626C);
+  static const Color bgColor = Colors.white;
 }

@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class PomodoroTimer extends StatefulWidget {
+  const PomodoroTimer({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<PomodoroTimer> createState() => _PomodoroTimerState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PomodoroTimerState extends State<PomodoroTimer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
