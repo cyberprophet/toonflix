@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toonflix/models/webtoon_detail_model.dart';
 import 'package:toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/services/toonflix_api_service.dart';
+import 'package:toonflix/widgets/episode_widget.dart';
 
 class ToonDetailScreen extends StatefulWidget {
   const ToonDetailScreen({
@@ -32,6 +34,14 @@ class _ToonDetailScreenState extends State<ToonDetailScreen> {
             fontSize: 24,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_outline,
+            ),
+            onPressed: onHeartTap,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -85,15 +95,20 @@ class _ToonDetailScreenState extends State<ToonDetailScreen> {
                             height: 15,
                           ),
                           Text(
-                            '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                            '${snapshot.data!.genre}, ${snapshot.data!.age}',
                             style: const TextStyle(
                               fontSize: 16,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ],
                       )
                     : const Center(
-                        child: CircularProgressIndicator(),
+                        child: LinearProgressIndicator(
+                          minHeight: 1,
+                          color: Colors.green,
+                          backgroundColor: Colors.grey,
+                        ),
                       ),
                 future: webtoon,
               ),
@@ -105,47 +120,18 @@ class _ToonDetailScreenState extends State<ToonDetailScreen> {
                     ? Column(
                         children: [
                           for (var episode in snapshot.data!)
-                            Container(
-                              margin: const EdgeInsets.only(
-                                bottom: 10,
-                              ),
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(5, 15),
-                                      blurRadius: 15,
-                                      color: Colors.black.withOpacity(0.3),
-                                    ),
-                                  ],
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      episode.title,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                    const Icon(
-                                      Icons.chevron_right_rounded,
-                                    )
-                                  ],
-                                ),
-                              ),
+                            Episode(
+                              episode: episode,
+                              webtoonId: widget.id,
                             )
                         ],
                       )
                     : const Center(
-                        child: CircularProgressIndicator(),
+                        child: LinearProgressIndicator(
+                          minHeight: 1,
+                          color: Colors.green,
+                          backgroundColor: Colors.grey,
+                        ),
                       ),
                 future: episodes,
               )
@@ -159,10 +145,23 @@ class _ToonDetailScreenState extends State<ToonDetailScreen> {
   @override
   void initState() {
     super.initState();
+    initPrefs();
     webtoon = ToonApi.getToonById(widget.id);
     episodes = ToonApi.getLatestEpisodesById(widget.id);
   }
 
+  Future initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() => isLiked = prefs.getBool(widget.id) ?? false);
+  }
+
+  onHeartTap() async {
+    setState(() => isLiked = !isLiked);
+    await prefs.setBool(widget.id, isLiked);
+  }
+
+  bool isLiked = false;
   late Future<List<WebtoonEpisodeModel>> episodes;
   late Future<WebtoonDetailModel> webtoon;
+  late SharedPreferences prefs;
 }

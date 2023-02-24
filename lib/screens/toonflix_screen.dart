@@ -24,14 +24,20 @@ class ToonflixScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: webtoons,
-        builder: (context, snapshot) => snapshot.hasData
+        builder: (_, snapshot) => snapshot.hasData
             ? Column(
                 children: [
-                  const SizedBox(
-                    height: 25,
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
                   ),
                   Expanded(
+                    flex: 5,
                     child: makeList(snapshot),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(),
                   ),
                 ],
               )
