@@ -38,6 +38,7 @@ dependencies:
   url_launcher: ^6.1.10
   shared_preferences: ^2.0.18
   flutter_dotenv: ^5.0.2
+  kakao_flutter_sdk: ^1.4.0
 
 dev_dependencies:
   flutter_test:

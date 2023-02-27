@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:toonflix/models/webtoon_model.dart';
+import 'package:toonflix/screens/kakao_login_screen.dart';
 import 'package:toonflix/services/toonflix_api_service.dart';
 import 'package:toonflix/widgets/webtoon_widget.dart';
 
@@ -35,9 +36,9 @@ class ToonflixScreen extends StatelessWidget {
                     flex: 5,
                     child: makeList(snapshot),
                   ),
-                  Expanded(
+                  const Expanded(
                     flex: 1,
-                    child: Container(),
+                    child: KakaoLogin(),
                   ),
                 ],
               )
