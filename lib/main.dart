@@ -1,7 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toonflix/screens/toonflix_screen.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(
+    fileName: '.env',
+  );
+  if (kDebugMode) {
+    print(dotenv.env['KAKAO_NATIVE_APP_KEY']);
+  }
   runApp(const App());
 }
 
