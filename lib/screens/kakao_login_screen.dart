@@ -27,7 +27,7 @@ class KakaoLogin extends StatelessWidget {
           ),
           child: Image.network(
               fit: BoxFit.fill,
-              'https://coreapi.shareinvest.net/images/buttons/kakao_login_medium_wide.png'),
+              'https://${dotenv.env['BASE_URL']}/images/buttons/kakao_login_medium_wide.png'),
         ),
       ),
     );
